@@ -34,8 +34,8 @@ export async function POST(req) {
       });
     }
 
-    const quantity = item.quantity || 1;
-const total = Math.round(item.price * quantity);
+const quantity = item.quantity || 1;
+const total = String(item.price * quantity);
 
 const payload = {
   orderId: `order-${Date.now()}`,
@@ -46,14 +46,15 @@ const payload = {
         productId: item.sku || item.title,
         title: item.title,
         quantity: {
-          count: quantity,
-          label: 'шт',
+          count: String(quantity),   // строка!
         },
-        unitPrice: item.price,  // ← исправлено
-        total: total,
+        unitPrice: String(item.price),  // строка!
+        total: total,                    // строка!
       },
     ],
-    total: total,
+    total: {
+      amount: total,   // объект с amount, и это строка!
+    },
   },
   redirectUrls: {
     onSuccess: item.url,

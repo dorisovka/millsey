@@ -35,31 +35,31 @@ export async function POST(req) {
     }
 
     const quantity = item.quantity || 1;
-    const total = String(Math.round(item.price * quantity));
+const total = Math.round(item.price * quantity);
 
-    const payload = {
-      orderId: `order-${Date.now()}`,
-      currencyCode: 'RUB',
-      cart: {
-        items: [
-          {
-            productId: item.sku || item.title,
-            title: item.title,
-            quantity: {
-              count: quantity,
-              label: 'шт',
-            },
-            unitPrice: String(item.price),
-            total: total,
-          },
-        ],
+const payload = {
+  orderId: `order-${Date.now()}`,
+  currencyCode: 'RUB',
+  cart: {
+    items: [
+      {
+        productId: item.sku || item.title,
+        title: item.title,
+        quantity: {
+          count: quantity,
+          label: 'шт',
+        },
+        unitPrice: item.price,  // ← исправлено
         total: total,
       },
-      redirectUrls: {
-        onSuccess: item.url,
-        onError: item.url,
-      },
-    };
+    ],
+    total: total,
+  },
+  redirectUrls: {
+    onSuccess: item.url,
+    onError: item.url,
+  },
+};
 
     console.log('YANDEX REQUEST PAYLOAD:', JSON.stringify(payload, null, 2));
 

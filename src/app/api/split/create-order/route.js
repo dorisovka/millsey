@@ -62,6 +62,8 @@ const payload = {
 };
 
     console.log('YANDEX REQUEST PAYLOAD:', JSON.stringify(payload, null, 2));
+    console.log('TOTAL TYPE:', typeof total, 'VALUE:', total);
+    console.log('UNIT PRICE TYPE:', typeof item.price, 'VALUE:', item.price);
 
     const res = await fetch('https://sandbox.pay.yandex.ru/api/merchant/v1/orders', {
       method: 'POST',
